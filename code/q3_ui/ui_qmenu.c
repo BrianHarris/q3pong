@@ -1191,7 +1191,13 @@ void ScrollList_Draw( menulist_s *l )
 	hasfocus = (l->generic.parent->cursor == l->generic.menuPosition);
 
 	x =	l->generic.x;
-	for( column = 0; column < l->columns; column++ ) {
+   u = x - 2;
+   if( l->generic.flags & QMF_CENTER_JUSTIFY ) {
+      u -= (l->width * SMALLCHAR_WIDTH) / 2 + 1;
+   }
+   UI_FillRect(u, l->generic.y, l->width*SMALLCHAR_WIDTH, (l->height*SMALLCHAR_HEIGHT)+2, menu_dim_color);
+
+   for( column = 0; column < l->columns; column++ ) {
 		y =	l->generic.y;
 		base = l->top + column * l->height;
 		for( i = base; i < base + l->height; i++) {
@@ -1200,11 +1206,6 @@ void ScrollList_Draw( menulist_s *l )
 
 			if (i == l->curvalue)
 			{
-				u = x - 2;
-				if( l->generic.flags & QMF_CENTER_JUSTIFY ) {
-					u -= (l->width * SMALLCHAR_WIDTH) / 2 + 1;
-				}
-
 				UI_FillRect(u,y,l->width*SMALLCHAR_WIDTH,SMALLCHAR_HEIGHT+2,listbar_color);
 				color = text_color_highlight;
 

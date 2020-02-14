@@ -787,7 +787,7 @@ static void CG_CalcEntityLerpPositions( centity_t *cent ) {
 	// player state
 	if ( cent != &cg.predictedPlayerEntity ) {
 		CG_AdjustPositionForMover( cent->lerpOrigin, cent->currentState.groundEntityNum, 
-		cg.snap->serverTime, cg.time, cent->lerpOrigin );
+         cg.snap->serverTime, cg.time, cent->lerpOrigin );
 	}
 }
 

@@ -116,9 +116,13 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 		vec3_t v;
 
 		nent = G_Spawn();
-		if ( other->takedamage && other->client ) {
+		if ( other->takedamage && other->client || other->s.eType == ET_BALL ) {
 
-			G_AddEvent( nent, EV_MISSILE_HIT, DirToByte( trace->plane.normal ) );
+         if (other->client){
+            G_AddEvent( nent, EV_MISSILE_HIT, DirToByte( trace->plane.normal ) );
+         }else{
+            G_AddEvent( nent, EV_MISSILE_MISS_METAL, DirToByte( trace->plane.normal ) );
+         }
 			nent->s.otherEntityNum = other->s.number;
 
 			ent->enemy = other;
@@ -435,7 +439,7 @@ gentity_t *fire_grapple (gentity_t *self, vec3_t start, vec3_t dir) {
 	hook->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;		// move a bit on the very first frame
 	hook->s.otherEntityNum = self->s.number; // use to match beam in client
 	VectorCopy( start, hook->s.pos.trBase );
-	VectorScale( dir, 800, hook->s.pos.trDelta );
+	VectorScale( dir, 6400, hook->s.pos.trDelta );
 	SnapVector( hook->s.pos.trDelta );			// save net bandwidth
 	VectorCopy (start, hook->r.currentOrigin);
 

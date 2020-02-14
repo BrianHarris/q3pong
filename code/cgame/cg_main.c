@@ -619,10 +619,13 @@ static void CG_RegisterSounds( void ) {
 	cgs.media.n_healthSound = trap_S_RegisterSound("sound/items/n_health.wav", qfalse );
 	cgs.media.hgrenb1aSound = trap_S_RegisterSound("sound/weapons/grenade/hgrenb1a.wav", qfalse);
 	cgs.media.hgrenb2aSound = trap_S_RegisterSound("sound/weapons/grenade/hgrenb2a.wav", qfalse);
+
+#ifdef MISSIONPACK
 	cgs.media.wstbimplSound = trap_S_RegisterSound("sound/weapons/proxmine/wstbimpl.wav", qfalse);
 	cgs.media.wstbimpmSound = trap_S_RegisterSound("sound/weapons/proxmine/wstbimpm.wav", qfalse);
 	cgs.media.wstbimpdSound = trap_S_RegisterSound("sound/weapons/proxmine/wstbimpd.wav", qfalse);
 	cgs.media.wstbactvSound = trap_S_RegisterSound("sound/weapons/proxmine/wstbactv.wav", qfalse);
+#endif
 
 }
 
@@ -733,10 +736,13 @@ static void CG_RegisterGraphics( void ) {
 	}
 	*/
 
-	if ( 1 /*gs.gametype >= GT_TEAM || cg_buildScript.integer*/ ) {
+	//if ( *gs.gametype >= GT_TEAM || cg_buildScript.integer )
+   {
 		cgs.media.friendShader = trap_R_RegisterShader( "sprites/foe" );
 		cgs.media.redQuadShader = trap_R_RegisterShader("powerups/blueflag" );
-		cgs.media.teamStatusBar = trap_R_RegisterShader( "gfx/2d/colorbar.tga" );
+      cgs.media.teamColorBar = trap_R_RegisterShader( "gfx/2d/colorbar.tga" );
+      cgs.media.teamStatusBarBG = trap_R_RegisterShader( "statusbg" );
+      cgs.media.teamStatusBarFG = trap_R_RegisterShader( "statusfg" );
 	}
 
 	cgs.media.armorModel = trap_R_RegisterModel( "models/powerups/armor/armor_yel.md3" );
@@ -771,6 +777,7 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.medalImpressive = trap_R_RegisterShaderNoMip( "medal_impressive" );
 	cgs.media.medalExcellent = trap_R_RegisterShaderNoMip( "medal_excellent" );
 	cgs.media.medalGauntlet = trap_R_RegisterShaderNoMip( "medal_gauntlet" );
+   cgs.media.medalSplat = trap_R_RegisterShaderNoMip( "medal_splat" );
 	cgs.media.medalDefend = trap_R_RegisterShaderNoMip( "medal_defend" );
 	cgs.media.medalAssist = trap_R_RegisterShaderNoMip( "medal_assist" );
 	cgs.media.medalCapture = trap_R_RegisterShaderNoMip( "medal_capture" );

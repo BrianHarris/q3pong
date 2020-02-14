@@ -445,7 +445,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 			ent->client->accurateCount -= 2;
 			ent->client->ps.persistant[PERS_IMPRESSIVE_COUNT]++;
 			// add the sprite over the player's head
-			ent->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP );
+			ent->client->ps.eFlags &= ~EF_ALL_AWARDS;
 			ent->client->ps.eFlags |= EF_AWARD_IMPRESSIVE;
 			ent->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 		}
@@ -481,7 +481,14 @@ void Weapon_HookFree (gentity_t *ent)
 void Weapon_HookThink (gentity_t *ent)
 {
 	if (ent->enemy) {
+      /* This code moves the grapple point when the thing we are grappled to moves 
+         This is so we can attach to things like players and balls and doors and stuff */
 		vec3_t v, oldorigin;
+
+      if (ent->enemy->client && ent->enemy->client->ps.pm_type == PM_DEAD) {
+         Weapon_HookFree(ent);
+         return;
+      }
 
 		VectorCopy(ent->r.currentOrigin, oldorigin);
 		v[0] = ent->enemy->r.currentOrigin[0] + (ent->enemy->r.mins[0] + ent->enemy->r.maxs[0]) * 0.5;
@@ -490,9 +497,28 @@ void Weapon_HookThink (gentity_t *ent)
 		SnapVectorTowards( v, oldorigin );	// save net bandwidth
 
 		G_SetOrigin( ent, v );
+
+      if (ent->enemy->s.eType == ET_BALL){
+         // special case for balls, we want to pull the ball towards us
+         // v is the center of the ball
+         vec3_t direction;
+         VectorSubtract(ent->parent->client->ps.origin, v, direction);
+         VectorNormalize(direction);
+         // this little bit will make small (less massive) balls move faster
+         // a mass of 100 will make the ball move at 100 (the normal)
+         VectorScale(direction, (100.0f / ent->enemy->count) * 400.0f, direction);
+         VectorAdd(ent->enemy->s.pos.trDelta, direction, ent->enemy->s.pos.trDelta);
+         if (VectorLength(ent->enemy->s.pos.trDelta) > 500.0f){
+            // cap the max speed
+            VectorNormalize(ent->enemy->s.pos.trDelta);
+            VectorScale(ent->enemy->s.pos.trDelta, 500.0f, ent->enemy->s.pos.trDelta);
+         }
+      }
 	}
 
 	VectorCopy( ent->r.currentOrigin, ent->parent->client->ps.grapplePoint);
+
+   ent->nextthink = level.time + FRAMETIME;
 }
 
 /*

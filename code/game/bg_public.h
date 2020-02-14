@@ -210,30 +210,37 @@ typedef enum {
 	PERS_DEFEND_COUNT,				// defend awards
 	PERS_ASSIST_COUNT,				// assist awards
 	PERS_GAUNTLET_FRAG_COUNT,		// kills with the guantlet
-	PERS_CAPTURES					// captures
+   PERS_BALL_FRAG_COUNT,		// kills with the ball
+	PERS_CAPTURES				  // captures
 } persEnum_t;
 
 
 // entityState_t->eFlags
-#define	EF_DEAD				0x00000001		// don't draw a foe marker over players with EF_DEAD
-#define	EF_TELEPORT_BIT		0x00000004		// toggled every time the origin abruptly changes
-#define	EF_AWARD_EXCELLENT	0x00000008		// draw an excellent sprite
-#define	EF_BOUNCE			0x00000010		// for missiles
-#define	EF_BOUNCE_HALF		0x00000020		// for missiles
-#define	EF_AWARD_GAUNTLET	0x00000040		// draw a gauntlet sprite
-#define	EF_NODRAW			0x00000080		// may have an event, but no model (unspawned items)
-#define	EF_FIRING			0x00000100		// for lightning gun
-#define	EF_KAMIKAZE			0x00000200
-#define	EF_MOVER_STOP		0x00000400		// will push otherwise
-#define EF_AWARD_CAP		0x00000800		// draw the capture sprite
-#define	EF_TALK				0x00001000		// draw a talk balloon
-#define	EF_CONNECTION		0x00002000		// draw a connection trouble sprite
-#define	EF_VOTED			0x00004000		// already cast a vote
-#define	EF_AWARD_IMPRESSIVE	0x00008000		// draw an impressive sprite
-#define	EF_AWARD_DEFEND		0x00010000		// draw a defend sprite
-#define	EF_AWARD_ASSIST		0x00020000		// draw a assist sprite
-#define EF_AWARD_DENIED		0x00040000		// denied
-#define EF_TEAMVOTED		0x00080000		// already cast a team vote
+#define  EF_DEAD             0x00000001    // don't draw a foe marker over players with EF_DEAD
+#define  EF_TELEPORT_BIT     0x00000004    // toggled every time the origin abruptly changes
+#define  EF_AWARD_EXCELLENT  0x00000008    // draw an excellent sprite
+#define  EF_BOUNCE           0x00000010    // for missiles
+#define  EF_BOUNCE_HALF      0x00000020    // for missiles
+#define  EF_AWARD_GAUNTLET   0x00000040    // draw a gauntlet sprite
+#define  EF_NODRAW           0x00000080    // may have an event, but no model (unspawned items)
+#define  EF_FIRING           0x00000100    // for lightning gun
+#define  EF_KAMIKAZE         0x00000200
+#define  EF_MOVER_STOP       0x00000400    // will push otherwise
+#define  EF_AWARD_CAP        0x00000800    // draw the capture sprite
+#define  EF_TALK             0x00001000    // draw a talk balloon
+#define  EF_CONNECTION       0x00002000    // draw a connection trouble sprite
+#define  EF_VOTED            0x00004000    // already cast a vote
+#define  EF_AWARD_IMPRESSIVE 0x00008000    // draw an impressive sprite
+#define  EF_AWARD_DEFEND     0x00010000    // draw a defend sprite
+#define  EF_AWARD_SPLAT      0x00020000    // splat!
+#define  EF_AWARD_DENIED     0x00040000    // denied
+#define  EF_TEAMVOTED        0x00080000    // already cast a team vote
+
+// NOTE: anything above 0x00080000 is not sent over the network.
+// these are here so thoy don't break the code
+#define  EF_AWARD_ASSIST     0x00100000    // draw a assist sprite
+
+#define EF_ALL_AWARDS (EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_SPLAT )
 
 // NOTE: may not have more than 16
 typedef enum {
@@ -268,6 +275,11 @@ typedef enum {
 	HI_KAMIKAZE,
 	HI_PORTAL,
 	HI_INVULNERABILITY,
+
+   // QPONG
+   HI_STOPSIGN,
+   HI_UTURN,
+   HI_SPRING,
 
 	HI_NUM_HOLDABLE
 } holdable_t;

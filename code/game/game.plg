@@ -3,182 +3,117 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: game - Win32 Debug--------------------
+--------------------Configuration: game - Win32 QVM--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\WINDOWS\TEMP\RSPC291.TMP" with contents
+Creating temporary file "C:\WINDOWS\TEMP\RSP3080.BAT" with contents
 [
-/nologo /G5 /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "BUILDING_REF_GL" /D "DEBUG" /FR".\Debug/" /Fp".\Debug/game.pch" /YX /Fo".\Debug/" /Fd".\Debug/" /FD /c 
-"C:\PROJECTS\q3p\code\game\ai_chat.c"
-"C:\PROJECTS\q3p\code\game\ai_cmd.c"
-"C:\PROJECTS\q3p\code\game\ai_dmnet.c"
-"C:\PROJECTS\q3p\code\game\ai_dmq3.c"
-"C:\PROJECTS\q3p\code\game\ai_main.c"
-"C:\PROJECTS\q3p\code\game\ai_team.c"
-"C:\PROJECTS\q3p\code\game\ai_vcmd.c"
-"C:\PROJECTS\q3p\code\game\g_active.c"
-"C:\PROJECTS\q3p\code\game\g_arenas.c"
-"C:\PROJECTS\q3p\code\game\g_bot.c"
-"C:\PROJECTS\q3p\code\game\g_client.c"
-"C:\PROJECTS\q3p\code\game\g_cmds.c"
-"C:\PROJECTS\q3p\code\game\g_combat.c"
-"C:\PROJECTS\q3p\code\game\g_items.c"
-"C:\PROJECTS\q3p\code\game\g_main.c"
-"C:\PROJECTS\q3p\code\game\g_mem.c"
-"C:\PROJECTS\q3p\code\game\g_misc.c"
-"C:\PROJECTS\q3p\code\game\g_missile.c"
-"C:\PROJECTS\q3p\code\game\g_mover.c"
-"C:\PROJECTS\q3p\code\game\g_q3pong.c"
-"C:\PROJECTS\q3p\code\game\g_session.c"
-"C:\PROJECTS\q3p\code\game\g_spawn.c"
-"C:\PROJECTS\q3p\code\game\g_svcmds.c"
-"C:\PROJECTS\q3p\code\game\g_syscalls.c"
-"C:\PROJECTS\q3p\code\game\g_target.c"
-"C:\PROJECTS\q3p\code\game\g_team.c"
-"C:\PROJECTS\q3p\code\game\g_trigger.c"
-"C:\PROJECTS\q3p\code\game\g_utils.c"
-"C:\PROJECTS\q3p\code\game\g_weapon.c"
+@echo off
+cd .\vm
+C:\Quake3\bin_nt\lcc -DQ3_VM -S -Wf-target=bytecode -Wf-g -I..\\..\\cgame -I..\\..\\game -I..\\..\\q3_ui ..\g_q3pong.c
+C:\Quake3\bin_nt\addtofile ..\game.q3asm g_q3pong
 ]
-Creating command line "cl.exe @C:\WINDOWS\TEMP\RSPC291.TMP" 
-Creating temporary file "C:\WINDOWS\TEMP\RSPC292.TMP" with contents
+Creating command line "C:\WINDOWS\TEMP\RSP3080.BAT"
+<h3>Output Window</h3>
+Compiling .\g_q3pong.c...
+Creating temporary file "C:\WINDOWS\TEMP\RSP3091.BAT" with contents
 [
-kernel32.lib user32.lib winmm.lib /nologo /base:"0x20000000" /subsystem:windows /dll /incremental:yes /pdb:".\Debug/qagamex86.pdb" /map:".\Debug/qagamex86.map" /debug /machine:I386 /def:".\game.def" /out:"..\Debug/qagamex86.dll" /implib:".\Debug/qagamex86.lib" 
-.\Debug\ai_chat.obj
-.\Debug\ai_cmd.obj
-.\Debug\ai_dmnet.obj
-.\Debug\ai_dmq3.obj
-.\Debug\ai_main.obj
-.\Debug\ai_team.obj
-.\Debug\ai_vcmd.obj
-.\Debug\bg_misc.obj
-.\Debug\bg_pmove.obj
-.\Debug\bg_slidemove.obj
-.\Debug\g_active.obj
-.\Debug\g_arenas.obj
-.\Debug\g_bot.obj
-.\Debug\g_client.obj
-.\Debug\g_cmds.obj
-.\Debug\g_combat.obj
-.\Debug\g_items.obj
-.\Debug\g_main.obj
-.\Debug\g_mem.obj
-.\Debug\g_misc.obj
-.\Debug\g_missile.obj
-.\Debug\g_mover.obj
-.\Debug\g_q3pong.obj
-.\Debug\g_session.obj
-.\Debug\g_spawn.obj
-.\Debug\g_svcmds.obj
-.\Debug\g_syscalls.obj
-.\Debug\g_target.obj
-.\Debug\g_team.obj
-.\Debug\g_trigger.obj
-.\Debug\g_utils.obj
-.\Debug\g_weapon.obj
-.\Debug\q_math.obj
-.\Debug\q_shared.obj
+@echo off
+cd vm
+C:\Quake3\bin_nt\q3asm -o "\quake3\q3pong_beta\vm\qagame.qvm" -f ..\game
 ]
-Creating command line "link.exe @C:\WINDOWS\TEMP\RSPC292.TMP"
-<h3>Output Window</h3>
-Compiling...
-ai_chat.c
-ai_cmd.c
-C:\PROJECTS\q3p\code\game\ai_cmd.c(803) : warning C4101: 'client' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\ai_cmd.c(802) : warning C4101: 'netname' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\ai_cmd.c(844) : warning C4101: 'client' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\ai_cmd.c(843) : warning C4101: 'netname' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\ai_cmd.c(883) : warning C4101: 'client' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\ai_cmd.c(882) : warning C4101: 'netname' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\ai_cmd.c(968) : warning C4101: 'client' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\ai_cmd.c(967) : warning C4101: 'netname' : unreferenced local variable
-ai_dmnet.c
-ai_dmq3.c
-ai_main.c
-C:\PROJECTS\q3p\code\game\ai_main.c(597) : warning C4101: 'i' : unreferenced local variable
-ai_team.c
-ai_vcmd.c
-g_active.c
-C:\PROJECTS\q3p\code\game\g_active.c(599) : warning C4101: 'weaponTime' : unreferenced local variable
-g_arenas.c
-g_bot.c
-C:\PROJECTS\q3p\code\game\g_bot.c(424) : warning C4101: 'userinfo' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\g_bot.c(900) : warning C4101: 'basedelay' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\g_bot.c(896) : warning C4101: 'fragLimit' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\g_bot.c(898) : warning C4101: 'arenainfo' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\g_bot.c(899) : warning C4101: 'strValue' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\g_bot.c(902) : warning C4101: 'serverinfo' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\g_bot.c(901) : warning C4101: 'map' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\g_bot.c(897) : warning C4101: 'timeLimit' : unreferenced local variable
-g_client.c
-g_cmds.c
-g_combat.c
-g_items.c
-g_main.c
-g_mem.c
-g_misc.c
-g_missile.c
-g_mover.c
-g_q3pong.c
-C:\PROJECTS\q3p\code\game\g_q3pong.c(52) : warning C4101: 'players' : unreferenced local variable
-C:\PROJECTS\q3p\code\game\g_q3pong.c(924) : warning C4101: 'forward' : unreferenced local variable
-g_session.c
-C:\PROJECTS\q3p\code\game\g_session.c(77) : warning C4101: 'value' : unreferenced local variable
-g_spawn.c
-g_svcmds.c
-g_syscalls.c
-g_target.c
-g_team.c
-g_trigger.c
-g_utils.c
-C:\PROJECTS\q3p\code\game\g_utils.c(589) : warning C4101: 'te' : unreferenced local variable
-g_weapon.c
-Linking...
-   Creating library .\Debug/qagamex86.lib and object .\Debug/qagamex86.exp
-Creating temporary file "C:\WINDOWS\TEMP\RSPC3A2.TMP" with contents
-[
-/nologo /o".\Debug/game.bsc" 
-.\Debug\ai_chat.sbr
-.\Debug\ai_cmd.sbr
-.\Debug\ai_dmnet.sbr
-.\Debug\ai_dmq3.sbr
-.\Debug\ai_main.sbr
-.\Debug\ai_team.sbr
-.\Debug\ai_vcmd.sbr
-.\Debug\bg_misc.sbr
-.\Debug\bg_pmove.sbr
-.\Debug\bg_slidemove.sbr
-.\Debug\g_active.sbr
-.\Debug\g_arenas.sbr
-.\Debug\g_bot.sbr
-.\Debug\g_client.sbr
-.\Debug\g_cmds.sbr
-.\Debug\g_combat.sbr
-.\Debug\g_items.sbr
-.\Debug\g_main.sbr
-.\Debug\g_mem.sbr
-.\Debug\g_misc.sbr
-.\Debug\g_missile.sbr
-.\Debug\g_mover.sbr
-.\Debug\g_q3pong.sbr
-.\Debug\g_session.sbr
-.\Debug\g_spawn.sbr
-.\Debug\g_svcmds.sbr
-.\Debug\g_syscalls.sbr
-.\Debug\g_target.sbr
-.\Debug\g_team.sbr
-.\Debug\g_trigger.sbr
-.\Debug\g_utils.sbr
-.\Debug\g_weapon.sbr
-.\Debug\q_math.sbr
-.\Debug\q_shared.sbr]
-Creating command line "bscmake.exe @C:\WINDOWS\TEMP\RSPC3A2.TMP"
-Creating browse info file...
-<h3>Output Window</h3>
+Creating command line "C:\WINDOWS\TEMP\RSP3091.BAT"
+Generating qagame.qvm
+outputFilename: \quake3\q3pong_beta\vm\qagame.qvm
+pass 0: g_main
+pass 0: ..\g_syscalls
+pass 0: q_shared
+pass 0: q_math
+pass 0: g_weapon
+pass 0: g_utils
+pass 0: g_trigger
+pass 0: g_team
+pass 0: g_target
+pass 0: g_svcmds
+pass 0: g_spawn
+pass 0: g_session
+pass 0: g_q3pong
+pass 0: g_mover
+pass 0: g_missile
+pass 0: g_misc
+pass 0: g_mem
+pass 0: g_items
+pass 0: g_combat
+pass 0: g_cmds
+pass 0: g_client
+pass 0: g_bot
+pass 0: g_arenas
+pass 0: g_active
+pass 0: bg_slidemove
+pass 0: bg_pmove
+pass 0: bg_misc
+pass 0: ai_vcmd
+pass 0: ai_team
+pass 0: ai_main
+pass 0: ai_dmq3
+pass 0: ai_dmnet
+pass 0: ai_cmd
+pass 0: ai_chat
+pass 0: bg_lib
+pass 1: g_main
+pass 1: ..\g_syscalls
+pass 1: q_shared
+pass 1: q_math
+pass 1: g_weapon
+pass 1: g_utils
+pass 1: g_trigger
+pass 1: g_team
+pass 1: g_target
+pass 1: g_svcmds
+pass 1: g_spawn
+pass 1: g_session
+pass 1: g_q3pong
+pass 1: g_mover
+pass 1: g_missile
+pass 1: g_misc
+pass 1: g_mem
+pass 1: g_items
+pass 1: g_combat
+pass 1: g_cmds
+pass 1: g_client
+pass 1: g_bot
+pass 1: g_arenas
+pass 1: g_active
+pass 1: bg_slidemove
+pass 1: bg_pmove
+pass 1: bg_misc
+pass 1: ai_vcmd
+pass 1: ai_team
+pass 1: ai_main
+pass 1: ai_dmq3
+pass 1: ai_dmnet
+pass 1: ai_cmd
+pass 1: ai_chat
+pass 1: bg_lib
+0 total errors
+code segment:  443204
+data segment:    9168
+lit  segment:   23940
+bss  segment: 1418220
+instruction count: 149339
+Writing to \quake3\q3pong_beta\vm\qagame.qvm
+Writing \quake3\q3pong_beta\vm\qagame.map...
+9275 symbols defined
+Stats for hashtable 017703F0, 2048 buckets, 9275 nodes
+ Longest chain: 20, empty chains: 214, mean non-empty: 5.057252
+Stats for hashtable 017703E0, 100 buckets, 95 nodes
+ Longest chain: 3, empty chains: 36, mean non-empty: 1.484375
+    1 seconds elapsed
 
 
 
 <h3>Results</h3>
-qagamex86.dll - 0 error(s), 22 warning(s)
+game.exe - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

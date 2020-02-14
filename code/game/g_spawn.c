@@ -543,6 +543,9 @@ void SP_worldspawn( void ) {
 	G_SpawnString( "ballScale", "1", &s );
 	trap_Cvar_Set( "g_scaleBall", s );
 
+   G_SpawnString( "enableGrapple", "1", &s );
+   level.enableGrapple = atoi(s);
+
 	g_entities[ENTITYNUM_WORLD].s.number = ENTITYNUM_WORLD;
 	g_entities[ENTITYNUM_WORLD].classname = "worldspawn";
 

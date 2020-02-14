@@ -294,7 +294,7 @@ CG_GrappleTrail
 void CG_GrappleTrail( centity_t *ent, const weaponInfo_t *wi ) {
 	vec3_t	origin;
 	entityState_t	*es;
-	vec3_t			forward, up;
+	vec3_t			forward, right, up;
 	refEntity_t		beam;
 
 	es = &ent->currentState;
@@ -306,20 +306,21 @@ void CG_GrappleTrail( centity_t *ent, const weaponInfo_t *wi ) {
 	//FIXME adjust for muzzle position
 	VectorCopy ( cg_entities[ ent->currentState.otherEntityNum ].lerpOrigin, beam.origin );
 	beam.origin[2] += 26;
-	AngleVectors( cg_entities[ ent->currentState.otherEntityNum ].lerpAngles, forward, NULL, up );
+	AngleVectors( cg_entities[ ent->currentState.otherEntityNum ].lerpAngles, forward, right, up );
 	VectorMA( beam.origin, -6, up, beam.origin );
+   VectorMA( beam.origin, 16, forward, beam.origin );
 	VectorCopy( origin, beam.oldorigin );
 
 	if (Distance( beam.origin, beam.oldorigin ) < 64 )
 		return; // Don't draw if close
 
 	beam.reType = RT_LIGHTNING;
-	beam.customShader = cgs.media.lightningShader;
+	beam.customShader = cgs.media.railCoreShader; // cgs.media.lightningShader;
 
 	AxisClear( beam.axis );
-	beam.shaderRGBA[0] = 0xff;
-	beam.shaderRGBA[1] = 0xff;
-	beam.shaderRGBA[2] = 0xff;
+	beam.shaderRGBA[0] = cgs.clientinfo[ ent->currentState.clientNum ].color[0] * 0xff;
+	beam.shaderRGBA[1] = cgs.clientinfo[ ent->currentState.clientNum ].color[1] * 0xff;
+	beam.shaderRGBA[2] = cgs.clientinfo[ ent->currentState.clientNum ].color[2] * 0xff;
 	beam.shaderRGBA[3] = 0xff;
 	trap_R_AddRefEntityToScene( &beam );
 }
@@ -1330,9 +1331,11 @@ void CG_FireWeapon( centity_t *cent ) {
 	}
 
 	// play quad sound if needed
-	if ( cent->currentState.powerups & ( 1 << PW_QUAD ) ) {
-		trap_S_StartSound (NULL, cent->currentState.number, CHAN_ITEM, cgs.media.quadSound );
-	}
+   if ( ent->weapon != WP_GRAPPLING_HOOK){
+      if ( cent->currentState.powerups & ( 1 << PW_QUAD ) ) {
+         trap_S_StartSound (NULL, cent->currentState.number, CHAN_ITEM, cgs.media.quadSound );
+      }
+   }
 
 	// play a sound
 	for ( c = 0 ; c < 4 ; c++ ) {

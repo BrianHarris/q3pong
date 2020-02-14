@@ -1123,6 +1123,9 @@ void ClientSpawn(gentity_t *ent) {
     client->ps.ammo[WP_MACHINEGUN] = 100;
 
     client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_GAUNTLET );
+    if (g_grapple.value && level.enableGrapple){
+       client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_GRAPPLING_HOOK );
+    }
     client->ps.ammo[WP_GAUNTLET] = -1;
     client->ps.ammo[WP_GRAPPLING_HOOK] = -1;
   }
@@ -1139,16 +1142,13 @@ void ClientSpawn(gentity_t *ent) {
 	trap_GetUsercmd( client - level.clients, &ent->client->pers.cmd );
 	SetClientViewAngle( ent, spawn_angles );
 
-	if ( ent->client->sess.sessionTeam == TEAM_SPECTATOR ) {
-
-	} else {
+	if ( ent->client->sess.sessionTeam != TEAM_SPECTATOR ) {
 		G_KillBox( ent );
 		trap_LinkEntity (ent);
 
 		// force the base weapon up
 		client->ps.weapon = WP_MACHINEGUN;
 		client->ps.weaponstate = WEAPON_READY;
-
 	}
 
 	// don't allow full run speed for a bit
@@ -1172,7 +1172,7 @@ void ClientSpawn(gentity_t *ent) {
 		// select the highest weapon number available, after any
 		// spawn given items have fired
 		client->ps.weapon = 1;
-		for ( i = WP_NUM_WEAPONS - 1 ; i > 0 ; i-- ) {
+		for ( i = WP_NUM_WEAPONS - 2 ; i > 0 ; i-- ) {
 			if ( client->ps.stats[STAT_WEAPONS] & ( 1 << i ) ) {
 				client->ps.weapon = i;
 				break;

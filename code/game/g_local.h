@@ -11,8 +11,6 @@
 // the "gameversion" client command will print this plus compile date
 #define	GAMEVERSION	"baseq3"
 
-#include "g_qpong_local.h"
-
 #define BODY_QUEUE_SIZE		8
 
 #define INFINITE			1000000
@@ -384,6 +382,9 @@ typedef struct {
 	gentity_t	*locationHead;			// head of the location list
 	int			bodyQueIndex;			// dead bodies
 	gentity_t	*bodyQue[BODY_QUEUE_SIZE];
+
+   // QPONG
+   qboolean    enableGrapple;
 } level_locals_t;
 
 
@@ -922,3 +923,4 @@ int		trap_GeneticParentsAndChildSelection(int numranks, float *ranks, int *paren
 
 void	trap_SnapVector( float *v );
 
+#include "g_qpong_local.h"

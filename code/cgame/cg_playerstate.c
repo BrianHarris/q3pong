@@ -327,6 +327,12 @@ void CG_CheckLocalSounds( playerState_t *ps, playerState_t *ops ) {
 		reward = qtrue;
 		//Com_Printf("guantlet frag\n");
 	}
+   if (ps->persistant[PERS_BALL_FRAG_COUNT] != ops->persistant[PERS_BALL_FRAG_COUNT]) {
+		sfx = cgs.media.humiliationSound;
+		pushReward(sfx, cgs.media.medalSplat, ps->persistant[PERS_BALL_FRAG_COUNT]);
+		reward = qtrue;
+		//Com_Printf("ball frag\n");
+	}
 	if (ps->persistant[PERS_DEFEND_COUNT] != ops->persistant[PERS_DEFEND_COUNT]) {
 		pushReward(cgs.media.defendSound, cgs.media.medalDefend, ps->persistant[PERS_DEFEND_COUNT]);
 		reward = qtrue;

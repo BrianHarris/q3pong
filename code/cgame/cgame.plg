@@ -3,142 +3,99 @@
 <pre>
 <h1>Build Log</h1>
 <h3>
---------------------Configuration: cgame - Win32 Debug--------------------
+--------------------Configuration: cgame - Win32 QVM--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\WINDOWS\TEMP\RSP6064.TMP" with contents
+Creating temporary file "C:\WINDOWS\TEMP\RSP20D1.BAT" with contents
 [
-/nologo /G5 /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FR"Debug/" /Fp"Debug/cgame.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /c 
-"C:\PROJECTS\q3p\code\game\bg_misc.c"
-"C:\PROJECTS\q3p\code\game\bg_pmove.c"
-"C:\PROJECTS\q3p\code\game\bg_slidemove.c"
-"C:\PROJECTS\q3p\code\cgame\cg_consolecmds.c"
-"C:\PROJECTS\q3p\code\cgame\cg_draw.c"
-"C:\PROJECTS\q3p\code\cgame\cg_drawtools.c"
-"C:\PROJECTS\q3p\code\cgame\cg_effects.c"
-"C:\PROJECTS\q3p\code\cgame\cg_ents.c"
-"C:\PROJECTS\q3p\code\cgame\cg_event.c"
-"C:\PROJECTS\q3p\code\cgame\cg_info.c"
-"C:\PROJECTS\q3p\code\cgame\cg_localents.c"
-"C:\PROJECTS\q3p\code\cgame\cg_main.c"
-"C:\PROJECTS\q3p\code\cgame\cg_marks.c"
-"C:\PROJECTS\q3p\code\cgame\cg_players.c"
-"C:\PROJECTS\q3p\code\cgame\cg_playerstate.c"
-"C:\PROJECTS\q3p\code\cgame\cg_predict.c"
-"C:\PROJECTS\q3p\code\cgame\cg_q3pong.c"
-"C:\PROJECTS\q3p\code\cgame\cg_scoreboard.c"
-"C:\PROJECTS\q3p\code\cgame\cg_servercmds.c"
-"C:\PROJECTS\q3p\code\cgame\cg_snapshot.c"
-"C:\PROJECTS\q3p\code\cgame\cg_syscalls.c"
-"C:\PROJECTS\q3p\code\cgame\cg_view.c"
-"C:\PROJECTS\q3p\code\cgame\cg_weapons.c"
-"C:\PROJECTS\q3p\code\game\q_math.c"
-"C:\PROJECTS\q3p\code\game\q_shared.c"
+@echo off
+cd .\vm
+C:\Quake3\bin_nt\lcc -DQ3_VM -S -Wf-target=bytecode -Wf-g -I..\\..\\cgame -I..\\..\\game -I..\\..\\q3_ui ..\cg_q3pong.c
+C:\Quake3\bin_nt\addtofile ..\cgame.q3asm cg_q3pong
 ]
-Creating command line "cl.exe @C:\WINDOWS\TEMP\RSP6064.TMP" 
-Creating temporary file "C:\WINDOWS\TEMP\RSP6065.TMP" with contents
+Creating command line "C:\WINDOWS\TEMP\RSP20D1.BAT"
+<h3>Output Window</h3>
+Compiling .\cg_q3pong.c...
+Creating temporary file "C:\WINDOWS\TEMP\RSP20E1.BAT" with contents
 [
-/nologo /base:"0x30000000" /subsystem:windows /dll /incremental:yes /pdb:"Debug/cgamex86.pdb" /map:"Debug/cgamex86.map" /debug /machine:I386 /def:".\cgame.def" /out:"..\Debug/cgamex86.dll" /implib:"Debug/cgamex86.lib" 
-.\Debug\bg_misc.obj
-.\Debug\bg_pmove.obj
-.\Debug\bg_slidemove.obj
-.\Debug\cg_consolecmds.obj
-.\Debug\cg_draw.obj
-.\Debug\cg_drawtools.obj
-.\Debug\cg_effects.obj
-.\Debug\cg_ents.obj
-.\Debug\cg_event.obj
-.\Debug\cg_info.obj
-.\Debug\cg_localents.obj
-.\Debug\cg_main.obj
-.\Debug\cg_marks.obj
-.\Debug\cg_players.obj
-.\Debug\cg_playerstate.obj
-.\Debug\cg_predict.obj
-.\Debug\cg_q3pong.obj
-.\Debug\cg_scoreboard.obj
-.\Debug\cg_servercmds.obj
-.\Debug\cg_snapshot.obj
-.\Debug\cg_syscalls.obj
-.\Debug\cg_view.obj
-.\Debug\cg_weapons.obj
-.\Debug\q_math.obj
-.\Debug\q_shared.obj
+@echo off
+cd vm
+C:\Quake3\bin_nt\q3asm -o "\quake3\q3pong_beta\vm\cgame.qvm" -f ..\cgame
 ]
-Creating command line "link.exe @C:\WINDOWS\TEMP\RSP6065.TMP"
-<h3>Output Window</h3>
-Compiling...
-bg_misc.c
-bg_pmove.c
-bg_slidemove.c
-cg_consolecmds.c
-cg_draw.c
-C:\PROJECTS\q3p\code\cgame\cg_draw.c(1626) : warning C4101: 'content' : unreferenced local variable
-cg_drawtools.c
-cg_effects.c
-cg_ents.c
-C:\PROJECTS\q3p\code\cgame\cg_ents.c(696) : warning C4101: 'newVelocity' : unreferenced local variable
-C:\PROJECTS\q3p\code\cgame\cg_ents.c(696) : warning C4101: 'velocity' : unreferenced local variable
-cg_event.c
-cg_info.c
-C:\PROJECTS\q3p\code\cgame\cg_info.c(216) : error C2065: 'GT_QPONG' : undeclared identifier
-C:\PROJECTS\q3p\code\cgame\cg_info.c(216) : error C2051: case expression not constant
-C:\PROJECTS\q3p\code\cgame\cg_info.c(220) : error C2065: 'GT_SINGLE_PLAYER' : undeclared identifier
-C:\PROJECTS\q3p\code\cgame\cg_info.c(220) : error C2051: case expression not constant
-cg_localents.c
-cg_main.c
-cg_marks.c
-cg_players.c
-cg_playerstate.c
-C:\PROJECTS\q3p\code\cgame\cg_playerstate.c(275) : warning C4101: 'highScore' : unreferenced local variable
-cg_predict.c
-cg_q3pong.c
-cg_scoreboard.c
-cg_servercmds.c
-cg_snapshot.c
-cg_syscalls.c
-cg_view.c
-C:\PROJECTS\q3p\code\cgame\cg_view.c(778) : warning C4013: 'CG_Draw3DCrosshair' undefined; assuming extern returning int
-cg_weapons.c
-q_math.c
-q_shared.c
-Error executing cl.exe.
-Creating temporary file "C:\WINDOWS\TEMP\RSP60C2.TMP" with contents
-[
-/nologo /o"Debug/cgame.bsc" 
-.\Debug\bg_misc.sbr
-.\Debug\bg_pmove.sbr
-.\Debug\bg_slidemove.sbr
-.\Debug\cg_consolecmds.sbr
-.\Debug\cg_draw.sbr
-.\Debug\cg_drawtools.sbr
-.\Debug\cg_effects.sbr
-.\Debug\cg_ents.sbr
-.\Debug\cg_event.sbr
-.\Debug\cg_info.sbr
-.\Debug\cg_localents.sbr
-.\Debug\cg_main.sbr
-.\Debug\cg_marks.sbr
-.\Debug\cg_players.sbr
-.\Debug\cg_playerstate.sbr
-.\Debug\cg_predict.sbr
-.\Debug\cg_q3pong.sbr
-.\Debug\cg_scoreboard.sbr
-.\Debug\cg_servercmds.sbr
-.\Debug\cg_snapshot.sbr
-.\Debug\cg_syscalls.sbr
-.\Debug\cg_view.sbr
-.\Debug\cg_weapons.sbr
-.\Debug\q_math.sbr
-.\Debug\q_shared.sbr]
-Creating command line "bscmake.exe @C:\WINDOWS\TEMP\RSP60C2.TMP"
-Creating browse info file...
-<h3>Output Window</h3>
+Creating command line "C:\WINDOWS\TEMP\RSP20E1.BAT"
+Generating cgame.qvm
+outputFilename: \quake3\q3pong_beta\vm\cgame.qvm
+pass 0: cg_main
+pass 0: ..\cg_syscalls
+pass 0: cg_consolecmds
+pass 0: cg_draw
+pass 0: cg_drawtools
+pass 0: cg_effects
+pass 0: cg_ents
+pass 0: cg_event
+pass 0: cg_info
+pass 0: cg_localents
+pass 0: cg_marks
+pass 0: cg_players
+pass 0: cg_playerstate
+pass 0: cg_predict
+pass 0: cg_scoreboard
+pass 0: cg_servercmds
+pass 0: cg_snapshot
+pass 0: cg_view
+pass 0: cg_weapons
+pass 0: cg_q3pong
+pass 0: bg_slidemove
+pass 0: bg_pmove
+pass 0: bg_lib
+pass 0: bg_misc
+pass 0: q_math
+pass 0: q_shared
+pass 1: cg_main
+pass 1: ..\cg_syscalls
+pass 1: cg_consolecmds
+pass 1: cg_draw
+pass 1: cg_drawtools
+pass 1: cg_effects
+pass 1: cg_ents
+pass 1: cg_event
+pass 1: cg_info
+pass 1: cg_localents
+pass 1: cg_marks
+pass 1: cg_players
+pass 1: cg_playerstate
+pass 1: cg_predict
+pass 1: cg_scoreboard
+pass 1: cg_servercmds
+pass 1: cg_snapshot
+pass 1: cg_view
+pass 1: cg_weapons
+pass 1: cg_q3pong
+pass 1: bg_slidemove
+pass 1: bg_pmove
+pass 1: bg_lib
+pass 1: bg_misc
+pass 1: q_math
+pass 1: q_shared
+0 total errors
+code segment:  253316
+data segment:    9712
+lit  segment:   19564
+bss  segment: 3713388
+instruction count: 85704
+Writing to \quake3\q3pong_beta\vm\cgame.qvm
+Writing \quake3\q3pong_beta\vm\cgame.map...
+5515 symbols defined
+Stats for hashtable 01770480, 2048 buckets, 5515 nodes
+ Longest chain: 12, empty chains: 367, mean non-empty: 3.280785
+Stats for hashtable 01770470, 100 buckets, 95 nodes
+ Longest chain: 3, empty chains: 36, mean non-empty: 1.484375
+    1 seconds elapsed
 
 
 
 <h3>Results</h3>
-cgamex86.dll - 4 error(s), 5 warning(s)
+cgame.exe - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

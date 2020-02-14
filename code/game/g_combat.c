@@ -265,12 +265,12 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		} else {
 
 			if( meansOfDeath == MOD_GAUNTLET ) {
-				
 				// play humiliation on player
+
 				attacker->client->ps.persistant[PERS_GAUNTLET_FRAG_COUNT]++;
 
 				// add the sprite over the player's head
-				attacker->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP );
+				attacker->client->ps.eFlags &= ~EF_ALL_AWARDS;
 				attacker->client->ps.eFlags |= EF_AWARD_GAUNTLET;
 				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 
@@ -279,6 +279,17 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 				
 				AddScore( attacker, self->r.currentOrigin, 1 );
 			} else if( meansOfDeath == MOD_BALL ) {
+
+            attacker->client->ps.persistant[PERS_BALL_FRAG_COUNT]++;
+
+				// add the sprite over the player's head
+				attacker->client->ps.eFlags &= ~EF_ALL_AWARDS;
+				attacker->client->ps.eFlags |= EF_AWARD_SPLAT;
+				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
+
+				// also play humiliation on target
+				self->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_GAUNTLETREWARD;
+
 				//  2 frags for ball kills
 				AddScore( attacker, self->r.currentOrigin, 2 );
 				/*
@@ -297,7 +308,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 				attacker->client->ps.persistant[PERS_EXCELLENT_COUNT]++;
 
 				// add the sprite over the player's head
-				attacker->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP );
+				attacker->client->ps.eFlags &= ~EF_ALL_AWARDS;
 				attacker->client->ps.eFlags |= EF_AWARD_EXCELLENT;
 				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 			}
@@ -604,7 +615,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	// figure momentum add, even if the damage won't be taken
 	if (knockback && (targ->client || targ->s.eType == ET_BALL)) {
 		vec3_t	kvel, velocity;
-		float	mass;
+		float	mass = targ->count;
 
 		if(targ->s.eType == ET_BALL){
 			vec3_t bangle;
@@ -617,7 +628,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			if (mod == MOD_SHOTGUN)
 				knockback *= 2;
 
-			knockback /= 2;
+         knockback *= 0.66;
 
 			BG_EvaluateTrajectoryDelta( &targ->s.pos, level.time, velocity );
 
@@ -626,8 +637,6 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			if (targ->s.pos.trType != TR_BALL){
 				targ->s.pos.trType = TR_BALL;
 			}
-
-			mass = targ->count;
 
 			if (point){
 				/*
@@ -660,6 +669,13 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			//G_Printf("bangle: %f %f %f\n", point[0], point[1], point[2]);
 			//G_Printf("trDelta: %f %f %f\n", targ->s.pos.trDelta[0], targ->s.pos.trDelta[1], targ->s.pos.trDelta[2]);
 
+         /* The way we figure out who scores a goal is thus:
+            each ball has an owner.  if the owner hits the ball, an internal tally (health) is increased by the amount
+            of knockback done to the ball.  this way we can see how much the owner is moving the ball.
+            if someone other than the owner hits the ball, we subtract the knockback from the tally.  when the tally
+            hits 0, then the person that dealt the "final blow" takes control of the ball.
+            The way to control the ball is basically to do more damage to it than everyone else combined.
+         */
 			if (attacker->client){
 				if (targ->enemy == attacker){
 					targ->health+=knockback;
@@ -668,7 +684,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 					if (targ->health <= 0){
 						targ->health = 0;
 						targ->enemy = attacker;
-			//		G_Printf("%s took control of the ball!\n", attacker->client->pers.netname);
+			         //G_Printf("%s took control of the ball!\n", attacker->client->pers.netname);
 					}
 				}
 			}

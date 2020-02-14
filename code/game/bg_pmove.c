@@ -25,6 +25,7 @@ float	pm_friction = 6.0f;
 float	pm_waterfriction = 1.0f;
 float	pm_flightfriction = 3.0f;
 float	pm_spectatorfriction = 5.0f;
+float pm_grapplefriction = 0.9f;
 
 int		c_pmove = 0;
 
@@ -358,7 +359,11 @@ static qboolean PM_CheckJump( void ) {
 	pm->ps->pm_flags |= PMF_JUMP_HELD;
 
 	pm->ps->groundEntityNum = ENTITYNUM_NONE;
-	pm->ps->velocity[2] = JUMP_VELOCITY;
+   pm->ps->velocity[2] += JUMP_VELOCITY;
+
+   if ( pm->ps->velocity[2] < JUMP_VELOCITY )
+      pm->ps->velocity[2] = JUMP_VELOCITY;
+
 	PM_AddEvent( EV_JUMP );
 
 	if ( pm->cmd.forwardmove >= 0 ) {
@@ -619,7 +624,7 @@ static void PM_AirMove( void ) {
 		PM_SlideMove ( qtrue );
 #endif
 
-	PM_StepSlideMove ( qtrue );
+   PM_StepSlideMove ( qtrue );
 }
 
 /*
@@ -629,21 +634,26 @@ PM_GrappleMove
 ===================
 */
 static void PM_GrappleMove( void ) {
-	vec3_t vel, v;
-	float vlen;
+	vec3_t vel, v, normalVelocity;
+   float vlen;
 
-	VectorScale(pml.forward, -16, v);
-	VectorAdd(pm->ps->grapplePoint, v, v);
-	VectorSubtract(v, pm->ps->origin, vel);
-	vlen = VectorLength(vel);
-	VectorNormalize( vel );
+   VectorScale(pml.forward, -16.0f, v);
+   VectorAdd(pm->ps->grapplePoint, v, v);
+   VectorSubtract(v, pm->ps->origin, vel);
+   vlen = VectorNormalize( vel );
 
-	if (vlen <= 100)
-		VectorScale(vel, 10 * vlen, vel);
-	else
-		VectorScale(vel, 800, vel);
+   VectorCopy(pm->ps->velocity, normalVelocity);
+   VectorNormalize(normalVelocity);
 
-	VectorCopy(vel, pm->ps->velocity);
+   if ((VectorLength(pm->ps->velocity) * DotProduct(normalVelocity, vel)) < 800.0f){
+      VectorScale(vel, 8000.0f * pml.frametime, vel);
+
+      VectorAdd(pm->ps->velocity, vel, pm->ps->velocity);
+   }
+
+   if (vlen <= 100.0f){
+      VectorScale(pm->ps->velocity, pm_grapplefriction, pm->ps->velocity);
+   }
 
 	pml.groundPlane = qfalse;
 }
@@ -1076,6 +1086,13 @@ static void PM_GroundTrace( void ) {
 	point[0] = pm->ps->origin[0];
 	point[1] = pm->ps->origin[1];
 	point[2] = pm->ps->origin[2] - 0.25;
+
+   if ( pm->ps->velocity[2] > 180) {
+      pm->ps->groundEntityNum = ENTITYNUM_NONE;
+      pml.groundPlane = qfalse;
+      pml.walking = qfalse;
+      return;
+   } 
 
 	pm->trace (&trace, pm->ps->origin, pm->mins, pm->maxs, point, pm->ps->clientNum, pm->tracemask);
 	pml.groundTrace = trace;
@@ -1884,9 +1901,9 @@ void PmoveSingle (pmove_t *pmove) {
 		// flight powerup doesn't allow jump and has different friction
 		PM_FlyMove();
 	} else if (pm->ps->pm_flags & PMF_GRAPPLE_PULL) {
-		PM_GrappleMove();
 		// We can wiggle a bit
-		PM_AirMove();
+		PM_GrappleMove();
+      PM_AirMove();
 	} else if (pm->ps->pm_flags & PMF_TIME_WATERJUMP) {
 		PM_WaterJumpMove();
 	} else if ( pm->waterlevel > 1 ) {

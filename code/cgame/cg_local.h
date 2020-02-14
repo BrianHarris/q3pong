@@ -648,7 +648,9 @@ typedef struct {
 	qhandle_t	armorModel;
 	qhandle_t	armorIcon;
 
-	qhandle_t	teamStatusBar;
+   qhandle_t	teamColorBar;
+	qhandle_t	teamStatusBarFG;
+   qhandle_t	teamStatusBarBG;
 
 	qhandle_t	deferShader;
 
@@ -749,6 +751,7 @@ typedef struct {
 	qhandle_t	medalImpressive;
 	qhandle_t	medalExcellent;
 	qhandle_t	medalGauntlet;
+   qhandle_t	medalSplat;
 	qhandle_t	medalDefend;
 	qhandle_t	medalAssist;
 	qhandle_t	medalCapture;

@@ -37,4 +37,3 @@ typedef struct {
 } levelData_t;
 
 extern levelData_t q3p_levelData;
-

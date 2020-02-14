@@ -1549,6 +1549,11 @@ static void CG_PlayerSprites( centity_t *cent ) {
 		return;
 	}
 
+   if ( cent->currentState.eFlags & EF_AWARD_SPLAT) {
+      CG_PlayerFloatSprite( cent, cgs.media.medalSplat );
+		return;
+   }
+
 	if ( cent->currentState.eFlags & EF_AWARD_DEFEND ) {
 		CG_PlayerFloatSprite( cent, cgs.media.medalDefend );
 		return;

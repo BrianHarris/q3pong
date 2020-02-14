@@ -494,7 +494,57 @@ gitem_t	bg_itemlist[] =
 /* precache */ "",
 /* sounds */ "sound/items/use_medkit.wav"
 	},
-
+/*QUAKED holdable_stopsign (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+	{
+		"holdable_stopsign", 
+		"sound/items/holdable.wav",
+        { 
+		"models/powerups/holdable/stopsign.md3", 
+		"models/powerups/holdable/stopsign_sphere.md3",
+		0, 0},
+/* icon */		"icons/stopsign",
+/* pickup */	"Stop Sign",
+		60,
+		IT_HOLDABLE,
+		HI_STOPSIGN,
+/* precache */ "",
+/* sounds */ "sound/items/use_stopsign.wav"
+	},
+/*QUAKED holdable_uturn (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+	{
+		"holdable_uturn", 
+		"sound/items/holdable.wav",
+        { 
+		"models/powerups/holdable/uturn.md3", 
+		"models/powerups/holdable/uturn_sphere.md3",
+		0, 0},
+/* icon */		"icons/uturn",
+/* pickup */	"U-Turn",
+		60,
+		IT_HOLDABLE,
+		HI_UTURN,
+/* precache */ "",
+/* sounds */ "sound/items/use_uturn.wav"
+	},
+/*QUAKED holdable_spring (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+	{
+		"holdable_spring", 
+		"sound/items/holdable.wav",
+        { 
+		"models/powerups/holdable/spring.md3", 
+		"models/powerups/holdable/spring_sphere.md3",
+		0, 0},
+/* icon */		"icons/spring",
+/* pickup */	"Spring",
+		60,
+		IT_HOLDABLE,
+		HI_SPRING,
+/* precache */ "",
+/* sounds */ "sound/items/use_stopsign.wav"
+	},
 	//
 	// POWERUP ITEMS
 	//

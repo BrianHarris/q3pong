@@ -318,8 +318,36 @@ void CG_DrawTeamBackground( int x, int y, int w, int h, float alpha, int team )
 		return;
 	}
 	trap_R_SetColor( hcolor );
-	CG_DrawPic( x, y, w, h, cgs.media.teamStatusBar );
+	CG_DrawPic( x, y, w, h, cgs.media.teamColorBar );
 	trap_R_SetColor( NULL );
+}
+
+/*
+================
+CG_DrawStatusBackground
+
+================
+*/
+void CG_DrawStatusBackground( int x, int y, int w, int h, float alpha, int team )
+{
+	vec4_t		hcolor;
+
+	hcolor[3] = alpha;
+	if ( team == TEAM_RED ) {
+		hcolor[0] = 1;
+		hcolor[1] = 0;
+		hcolor[2] = 0;
+	} else if ( team == TEAM_BLUE ) {
+		hcolor[0] = 0;
+		hcolor[1] = 0;
+		hcolor[2] = 1;
+	} else {
+		return;
+	}
+	trap_R_SetColor( hcolor );
+	CG_DrawPic( x, y, w, h, cgs.media.teamStatusBarBG );
+	trap_R_SetColor( NULL );
+   CG_DrawPic( x, y, w, h, cgs.media.teamStatusBarFG );
 }
 
 /*
@@ -348,7 +376,7 @@ static void CG_DrawStatusBar( void ) {
 	}
 
 	// draw the team background
-	CG_DrawTeamBackground( 0, 420, 640, 60, 0.33f, cg.snap->ps.persistant[PERS_TEAM] );
+	CG_DrawStatusBackground( 0, 387, 640, 93, 0.33f, cg.snap->ps.persistant[PERS_TEAM] );
 
 	cent = &cg_entities[cg.snap->ps.clientNum];
 	ps = &cg.snap->ps;
@@ -452,6 +480,16 @@ static void CG_DrawStatusBar( void ) {
 		}
 
 	}
+
+   //
+	// splats
+	//
+	value = ps->persistant[PERS_BALL_FRAG_COUNT];
+	trap_R_SetColor( colors[0] );
+	CG_DrawField (540, 432, 2, value);
+	trap_R_SetColor( NULL );
+	// draw a 2D icon for splats
+	CG_DrawPic( 540 + CHAR_WIDTH*2 + TEXT_ICON_SPACE + 4, 436, ICON_SIZE/2, ICON_SIZE/2, cgs.media.medalSplat);
 }
 
 /*
@@ -689,7 +727,7 @@ static float CG_DrawTeamOverlay( float y, qboolean right, qboolean upper ) {
 		hcolor[3] = 0.33f;
 	}
 	trap_R_SetColor( hcolor );
-	CG_DrawPic( x, y, w, h, cgs.media.teamStatusBar );
+	CG_DrawPic( x, y, w, h, cgs.media.teamColorBar );
 	trap_R_SetColor( NULL );
 
 	for (i = 0; i < count; i++) {
@@ -1194,7 +1232,7 @@ static void CG_DrawTeamInfo( void ) {
 		}
 
 		trap_R_SetColor( hcolor );
-		CG_DrawPic( CHATLOC_X, CHATLOC_Y - h, 640, h, cgs.media.teamStatusBar );
+		CG_DrawPic( CHATLOC_X, CHATLOC_Y - h, 640, h, cgs.media.teamColorBar );
 		trap_R_SetColor( NULL );
 
 		hcolor[0] = hcolor[1] = hcolor[2] = 1.0;

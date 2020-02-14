@@ -3,7 +3,6 @@
 
 #include "g_local.h"
 
-
 /*
 ===============
 G_DamageFeedback
@@ -409,11 +408,11 @@ void ClientTimerActions( gentity_t *ent, int msec ) {
 			client->ps.stats[STAT_ARMOR]--;
 		}
 
-    if (g_speedy.integer){
-      if (!g_weapon.integer){
-        client->ps.ammo[client->ps.weapon] += 5;
+      if (g_speedy.integer){
+         if (!g_weapon.integer && client->ps.ammo[client->ps.weapon] >= 0){
+            client->ps.ammo[client->ps.weapon] += 5;
+         }
       }
-    }
 	}
 }
 
@@ -488,7 +487,7 @@ void ClientEvents( gentity_t *ent, int oldEventSequence ) {
 			FireWeapon( ent );
 			break;
 
-		case EV_USE_ITEM1:		// teleporter
+		case (EV_USE_ITEM0 + HI_TELEPORTER):
 			// drop flags in CTF
 			item = NULL;
 			j = 0;
@@ -519,11 +518,21 @@ void ClientEvents( gentity_t *ent, int oldEventSequence ) {
 			TeleportPlayer( ent, origin, angles );
 			break;
 
-		case EV_USE_ITEM2:		// medkit
+		case (EV_USE_ITEM0 + HI_MEDKIT):
 			ent->health = ent->client->ps.stats[STAT_MAX_HEALTH] + 25;
+         break;
 
+      case (EV_USE_ITEM0 + HI_STOPSIGN):
+         Q3P_Use_StopSign(ent);
 			break;
 
+      case (EV_USE_ITEM0 + HI_UTURN):
+         Q3P_Use_UTurn(ent);
+			break;
+
+      case (EV_USE_ITEM0 + HI_SPRING):
+         Q3P_Use_Spring(ent);
+			break;
 
 		default:
 			break;
@@ -670,7 +679,7 @@ void ClientThink_real( gentity_t *ent ) {
 
 	// clear the rewards if time
 	if ( level.time > client->rewardTime ) {
-		client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP );
+		client->ps.eFlags &= ~EF_ALL_AWARDS;
 	}
 
 	if ( client->noclip ) {
@@ -926,7 +935,8 @@ void ClientEndFrame( gentity_t *ent ) {
 	}
 
 	if ( ent->client->goalieTime && ent->client->goalieTime < (level.time - 500) ) {
-		trap_SendServerCommand(ent->s.number, "goalie 0");
+      //trap_SendServerCommand(ent->s.number, "goalie 0");
+      ent->client->ps.powerups[PW_BATTLESUIT] = 0;
 
 		ent->client->goalieTime = 0;
 	}

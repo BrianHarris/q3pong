@@ -67,6 +67,7 @@ vmCvar_t	g_startPoints;
 vmCvar_t	g_balls;
 vmCvar_t	g_playerDmgScale;
 vmCvar_t	g_announcer;
+vmCvar_t	g_grapple;
 vmCvar_t	g_ballScale;
 
 vmCvar_t	g_weapon;
@@ -140,11 +141,12 @@ cvarTable_t		gameCvarTable[] = {
 	{ &g_startPoints, "g_startPoints", "10", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 	{ &g_balls, "g_balls", "2", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 	{ &g_playerDmgScale , "g_playerDmgScale", "1", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
-	{ &g_announcer, "g_announcer", "1", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+	{ &g_announcer, "g_announcer", "3", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+   { &g_grapple, "g_grapple", "1", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 	{ &g_ballScale, "g_scaleBall", "1", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
-  { &g_weapon, "g_weapon", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue },
-  { &g_speedy, "g_speedy", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue },
-  { &g_aqua, "g_aqua", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue },
+   { &g_weapon, "g_weapon", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue },
+   { &g_speedy, "g_speedy", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue },
+   { &g_aqua, "g_aqua", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue },
 	// NO MORE QPONG STUFF, THAT IS ALL THANK YOU KIND SIR
 
 	{ &g_smoothClients, "g_smoothClients", "1", 0, 0, qfalse},
